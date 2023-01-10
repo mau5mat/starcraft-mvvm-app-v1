@@ -43,7 +43,7 @@ class UnitListCoordinator: Coordinator {
     }
 }
 
-protocol UnitListNavigation {
+protocol UnitListNavigation: AnyObject {
     func showUnitPage(with unit: SCUnit)
 }
 

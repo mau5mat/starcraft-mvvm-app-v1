@@ -39,7 +39,7 @@ class MainCoordinator: Coordinator {
     }
 }
 
-protocol MainNavigation {
+protocol MainNavigation: AnyObject {
     func showUnitListPage(with units: [SCUnit])
 }
 

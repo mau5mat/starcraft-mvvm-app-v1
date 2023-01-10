@@ -9,11 +9,11 @@ import UIKit
 
 class UnitListViewController: UIViewController {
     @IBOutlet weak private var tableView: UITableView!
+  
+    weak var navigation: UnitListNavigation?
     
     var loadingService: LoadingService!
     var dialogueService: DialogueService!
-    
-    var navigation: UnitListNavigation?
     
     var viewModel: UnitListViewModel!
 

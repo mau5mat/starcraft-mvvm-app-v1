@@ -12,11 +12,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak private var tableView: UITableView!
     
     private var cancellables: Set<AnyCancellable> = []
+  
+    weak var navigation: MainNavigation?
     
     var loadingService: LoadingService!
     var dialogueService: DialogueService!
-    
-    var navigation: MainNavigation?
     
     var viewModel: MainViewModel!
     
