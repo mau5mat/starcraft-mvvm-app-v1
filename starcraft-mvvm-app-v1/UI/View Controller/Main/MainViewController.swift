@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchAllUnits()
         handleState()
     }
     
@@ -74,14 +75,11 @@ extension MainViewController: UITableViewDelegate {
         
         switch buildingData.title {
         case "Barracks":
-            fetchBarracksUnits()
-            navigation?.showUnitListPage(with: viewModel.units)
+            navigation?.showUnitListPage(with: viewModel.barracksUnits)
         case "Factory":
-            fetchFactoryUnits()
-            navigation?.showUnitListPage(with: viewModel.units)
+            navigation?.showUnitListPage(with: viewModel.factoryUnits)
         case "Starport":
-            fetchStarportUnits()
-            navigation?.showUnitListPage(with: viewModel.units)
+            navigation?.showUnitListPage(with: viewModel.starportUnits)
         case .none:
             break
         case .some(_):
@@ -91,21 +89,9 @@ extension MainViewController: UITableViewDelegate {
 }
 
 extension MainViewController {
-    private func fetchBarracksUnits() {
+    private func fetchAllUnits() {
         Task {
-            await viewModel.fetchBarracksUnits()
-        }
-    }
-    
-    private func fetchFactoryUnits() {
-        Task {
-            await viewModel.fetchFactoryUnits()
-        }
-    }
-    
-    private func fetchStarportUnits() {
-        Task {
-            await viewModel.fetchStarportUnits()
+            await viewModel.fetchAllUnits()
         }
     }
 }
@@ -115,7 +101,7 @@ extension MainViewController {
         viewModel.$loadingState.sink { [weak self] state in
             switch state {
             case .idle:
-                self?.view.alpha = 1.0
+                self?.view.alpha = 0.0
                 break
             case .loading:
                 self?.view.alpha = 0.3
