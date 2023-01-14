@@ -59,14 +59,12 @@ class MainViewModel: ObservableObject {
                 loadingState = .noInternet
                 return
             }
-            
-            let unitData: [SCUnit] = try await responseService.decodeData(from: TerranEndpoint.getBarracksUnits)
-            barracksUnits = unitData
+            barracksUnits = try await responseService.decodeData(from: TerranEndpoint.getBarracksUnits)
             
             persistenceService.realm.writeAsync {
                 self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
                 
-                for unit in unitData {
+                for unit in self.barracksUnits {
                     unit.add(to: self.persistenceService.realm, with: .all)
                 }
             }
@@ -83,14 +81,12 @@ class MainViewModel: ObservableObject {
                 loadingState = .noInternet
                 return
             }
-            
-            let unitData: [SCUnit] = try await responseService.decodeData(from: TerranEndpoint.getFactoryUnits)
-            factoryUnits = unitData
+            factoryUnits = try await responseService.decodeData(from: TerranEndpoint.getFactoryUnits)
             
             persistenceService.realm.writeAsync {
                 self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
                 
-                for unit in unitData {
+                for unit in self.factoryUnits {
                     unit.add(to: self.persistenceService.realm, with: .all)
                 }
             }
@@ -107,14 +103,12 @@ class MainViewModel: ObservableObject {
                 loadingState = .noInternet
                 return
             }
-            
-            let unitData: [SCUnit] = try await responseService.decodeData(from: TerranEndpoint.getStarportUnits)
-            starportUnits = unitData
-            
+            starportUnits = try await responseService.decodeData(from: TerranEndpoint.getStarportUnits)
+  
             persistenceService.realm.writeAsync {
                 self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
                 
-                for unit in unitData {
+                for unit in self.starportUnits {
                     unit.add(to: self.persistenceService.realm, with: .all)
                 }
             }
