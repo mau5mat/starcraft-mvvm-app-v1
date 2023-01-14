@@ -24,10 +24,10 @@ class UnitListCoordinator: Coordinator {
         let viewModel = UnitListViewModel(units: units)
         
         let viewController = UnitListViewController.instantiate(storyboard: "UnitList")
-        viewController.viewModel = viewModel
-        viewController.navigation = self 
         viewController.loadingService = LoadingService()
         viewController.dialogueService = DialogueService()
+        viewController.viewModel = viewModel
+        viewController.navigation = self
     
         navigationController.pushViewController(viewController, animated: false)
     }

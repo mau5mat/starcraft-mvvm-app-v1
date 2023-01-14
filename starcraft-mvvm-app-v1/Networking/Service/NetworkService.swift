@@ -22,7 +22,6 @@ struct NetworkService: NetworkServiceProtocol {
     
     func requestData(with endpoint: Endpoint) async throws -> Data {
         let (data, response) = try await urlSession.data(for: endpoint.createURLRequest())
-        
         let statusCode = try convertToHttpUrlResponse(with: response).statusCode
         
         try handleApiErrors(with: statusCode, and: data)

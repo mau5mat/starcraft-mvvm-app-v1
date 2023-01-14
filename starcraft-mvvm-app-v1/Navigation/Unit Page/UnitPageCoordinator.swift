@@ -24,9 +24,9 @@ class UnitPageCoordinator: Coordinator {
         let viewModel = UnitPageViewModel(unit: unit)
         
         let viewController = UnitPageViewController.instantiate(storyboard: "UnitPage")
-        viewController.viewModel = viewModel
         viewController.loadingService = LoadingService()
         viewController.dialogueService = DialogueService()
+        viewController.viewModel = viewModel
     
         let unitPageNavigationController = UINavigationController()
         unitPageNavigationController.viewControllers = [viewController]

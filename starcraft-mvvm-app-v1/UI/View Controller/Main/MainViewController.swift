@@ -6,17 +6,14 @@
 //
 
 import UIKit
-import Combine
 
 class MainViewController: UIViewController {
     @IBOutlet weak private var tableView: UITableView!
     
-    private var cancellables: Set<AnyCancellable> = []
-  
     weak var navigation: MainNavigation?
     
-    var loadingService: LoadingService!
-    var dialogueService: DialogueService!
+    var loadingService: Loadable?
+    var dialogueService: Dialogued?
     
     var viewModel: MainViewModel!
     
@@ -122,29 +119,29 @@ extension MainViewController {
                 break
             case .loading:
                 self?.view.alpha = 0.3
-                self?.loadingService.showLoading(on: self!)
+                self?.loadingService?.showLoading(on: self!)
                 break
             case .loaded:
                 self?.view.alpha = 1.0
-                self?.loadingService.hideLoading(on: self!)
+                self?.loadingService?.hideLoading(on: self!, completion: nil)
                 break
             case .failed(let error):
                 self?.view.alpha = 0.0
-                self?.loadingService.hideLoading(on: self!) {
+                self?.loadingService?.hideLoading(on: self!) {
                     let dialogueData = DialogueData(type: .error, title: "Error", message: "\(error.localizedDescription)")
-                    self?.dialogueService.showDialogue(on: self!, data: dialogueData)
+                    self?.dialogueService?.showDialogue(on: self!, data: dialogueData, buttonActionClosure: nil)
                     self?.view.alpha = 1.0
                 }
                 break
             case .noInternet:
                 self?.view.alpha = 1.0
                 let dialogueData = DialogueData(type: .alert, title: "No Internet", message: "You aren't connected to the internet!")
-                self?.dialogueService.showDialogue(on: self!, data: dialogueData) {
+                self?.dialogueService?.showDialogue(on: self!, data: dialogueData) {
                     self!.navigationController?.popViewController(animated: true)
                 }
                 break
             }
-        }.store(in: &cancellables)
+        }.store(in: &viewModel.cancellables)
     }
 }
 

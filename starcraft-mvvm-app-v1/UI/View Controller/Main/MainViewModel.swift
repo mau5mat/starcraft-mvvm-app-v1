@@ -7,24 +7,26 @@
 
 import UIKit
 import RealmSwift
+import Combine
 
 class MainViewModel: ObservableObject {
     @Published private(set) var loadingState: LoadingState<Error>
     
+    private let responseService: EndpointResponseServiceProtocol
+    private let realmActions: MainRealmActionsProtocol
+    
+    private let persistenceService: PersistenceService
     private let connectionManager: ConnectionManager
     
-    private let responseService: EndpointResponseServiceProtocol
-    private let persistenceService: PersistenceService
-    private let realm: Realm
- 
+    var cancellables: Set<AnyCancellable> = []
+    
     private(set) var units: [SCUnit] = []
     
-    init(responseService: EndpointResponseServiceProtocol) {
-        self.connectionManager = ConnectionManager()
-        
+    init(responseService: EndpointResponseServiceProtocol, realmActions: MainRealmActionsProtocol, persistenceService: PersistenceService, connectionManager: ConnectionManager) {
         self.responseService = responseService
-        self.persistenceService = PersistenceService()
-        self.realm = persistenceService.realm
+        self.realmActions = realmActions
+        self.persistenceService = persistenceService
+        self.connectionManager = connectionManager
         
         loadingState = .idle
     }
@@ -38,23 +40,21 @@ class MainViewModel: ObservableObject {
     
     @MainActor
     func fetchBarracksUnits() async {
+        loadingState = .loading
         do {
-            loadingState = .loading
-            
             fetchUnitsWithRealmIfOffline(from: "Barracks")
             
             let unitData: [SCUnit] = try await responseService.decodeData(from: TerranEndpoint.getBarracksUnits)
             units = unitData
             
-            loadingState = .loaded
-            
-            realm.writeAsync { [weak self] in
-                self?.removeUnitsFromRealm()
+            persistenceService.realm.writeAsync {
+                self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
                 
                 for unit in unitData {
-                    unit.add(to: self!.realm, with: .all)
+                    unit.add(to: self.persistenceService.realm, with: .all)
                 }
             }
+            loadingState = .loaded
         } catch {
             loadingState = .failed(error)
             print(error.localizedDescription)
@@ -63,23 +63,21 @@ class MainViewModel: ObservableObject {
     
     @MainActor
     func fetchFactoryUnits() async {
+        loadingState = .loading
         do {
-            loadingState = .loading
-            
             fetchUnitsWithRealmIfOffline(from: "Factory")
             
             let unitData: [SCUnit] = try await responseService.decodeData(from: TerranEndpoint.getFactoryUnits)
             units = unitData
             
-            loadingState = .loaded
-            
-            realm.writeAsync { [weak self] in
-                self?.removeUnitsFromRealm()
+            persistenceService.realm.writeAsync {
+                self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
                 
                 for unit in unitData {
-                    unit.add(to: self!.realm, with: .all)
+                    unit.add(to: self.persistenceService.realm, with: .all)
                 }
             }
+            loadingState = .loaded
         } catch {
             loadingState = .failed(error)
             print(error.localizedDescription)
@@ -88,23 +86,21 @@ class MainViewModel: ObservableObject {
     
     @MainActor
     func fetchStarportUnits() async {
+        loadingState = .loading
         do {
-            loadingState = .loading
-            
             fetchUnitsWithRealmIfOffline(from: "Starport")
             
             let unitData: [SCUnit] = try await responseService.decodeData(from: TerranEndpoint.getStarportUnits)
             units = unitData
             
-            loadingState = .loaded
-            
-            realm.writeAsync { [weak self] in
-                self?.removeUnitsFromRealm()
+            persistenceService.realm.writeAsync {
+                self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
                 
                 for unit in unitData {
-                    unit.add(to: self!.realm, with: .all)
+                    unit.add(to: self.persistenceService.realm, with: .all)
                 }
             }
+            loadingState = .loaded
         } catch {
             loadingState = .failed(error)
             print(error.localizedDescription)
@@ -115,37 +111,10 @@ class MainViewModel: ObservableObject {
         if connectionManager.noInternet() {
             loadingState = .noInternet
             
-            let unitsFromRealm = getUnitsFromRealm(from: building)
+            let unitsFromRealm = realmActions.getUnitsFrom(realm: persistenceService.realm, with: building)
             units = unitsFromRealm
             
             loadingState = .loaded
         }
-    }
-    
-    private func removeUnitsFromRealm() {
-        let unitObjects = SCUnit.read(from: realm)
-        SCUnit.remove(results: unitObjects, from: realm)
-        
-        removeBuildingsFromRealm()
-        removeUnitTypesFromRealm()
-    }
-    
-    private func removeBuildingsFromRealm() {
-        let buildingObjects = Building.read(from: realm)
-        Building.remove(results: buildingObjects, from: realm)
-    }
-    
-    private func removeUnitTypesFromRealm() {
-        let unitTypeObjects = UnitType.read(from: realm)
-        UnitType.remove(results: unitTypeObjects, from: realm)
-    }
-    
-    private func getUnitsFromRealm(from building: String) -> [SCUnit] {
-        let unitObject = SCUnit.read(from: realm)
-        let unitData = unitObject.compactMap { SCUnit(managedObject: $0) }
-        let unitArray = Array(unitData)
-        let filteredUnits = unitArray.filter({ $0.builtFrom == building })
-    
-        return filteredUnits
     }
 }

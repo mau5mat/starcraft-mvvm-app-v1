@@ -17,20 +17,25 @@ class MainCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = MainViewModel(responseService: EndpointResponseService(networkService: NetworkService(), parser: DataParser()))
+        let viewModel = MainViewModel(
+            responseService: EndpointResponseService(networkService: NetworkService(), parser: DataParser()),
+            realmActions: MainRealmActions(),
+            persistenceService: PersistenceService(),
+            connectionManager: ConnectionManager())
         
         let viewController = MainViewController.instantiate(storyboard: "Main")
+        viewController.dialogueService = DialogueService()
+        viewController.loadingService = LoadingService()
         viewController.viewModel = viewModel
         viewController.navigation = self
-        viewController.loadingService = LoadingService()
-        viewController.dialogueService = DialogueService()
-    
+        
+        
         navigationController.pushViewController(viewController, animated: false)
     }
     
     func finish(with child: Coordinator?) {
         for (index, coordinator) in
-            childCoordinators.enumerated() {
+                childCoordinators.enumerated() {
             if coordinator === child {
                 childCoordinators.remove(at: index)
                 break

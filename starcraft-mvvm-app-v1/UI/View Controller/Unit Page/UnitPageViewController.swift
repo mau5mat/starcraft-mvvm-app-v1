@@ -14,7 +14,6 @@ class UnitPageViewController: UIViewController {
     
     @IBOutlet weak private var blurView: UIView!
     @IBOutlet weak private var cardView: UIView!
-    
     @IBOutlet weak private var imageView: UIImageView!
     @IBOutlet weak private var nameLabel: UILabel!
     @IBOutlet weak private var unitTypeLabel: UILabel!
@@ -24,8 +23,8 @@ class UnitPageViewController: UIViewController {
     @IBOutlet weak private var supplyLabel: UILabel!
     @IBOutlet weak private var hotkeyLabel: UILabel!
     
-    var loadingService: LoadingService!
-    var dialogueService: DialogueService!
+    var loadingService: Loadable?
+    var dialogueService: Dialogued?
     
     var viewModel: UnitPageViewModel!
 

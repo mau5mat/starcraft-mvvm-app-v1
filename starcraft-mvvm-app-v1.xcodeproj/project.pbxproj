@@ -62,6 +62,7 @@
 		1FC6B5B1296DC05E000A147B /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B5B0296DC05E000A147B /* LoadingState.swift */; };
 		1FC6B5B4296DC118000A147B /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B5B3296DC118000A147B /* ConnectionManager.swift */; };
 		1FC6B5B7296DC14A000A147B /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 1FC6B5B6296DC14A000A147B /* Reachability */; };
+		9F5C46F82973271100651BA1 /* MainRealmActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5C46F72973271100651BA1 /* MainRealmActions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -119,6 +120,7 @@
 		1FC6B5AD296CF0D0000A147B /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		1FC6B5B0296DC05E000A147B /* LoadingState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		1FC6B5B3296DC118000A147B /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		9F5C46F72973271100651BA1 /* MainRealmActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRealmActions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 		1FC6B511296C4BE6000A147B /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				9F5C46F5297326E200651BA1 /* Actions */,
 				1FC6B546296C4D1F000A147B /* Service */,
 			);
 			path = Persistence;
@@ -555,6 +558,22 @@
 			path = Connectivity;
 			sourceTree = "<group>";
 		};
+		9F5C46F5297326E200651BA1 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				9F5C46F6297326F000651BA1 /* Main */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		9F5C46F6297326F000651BA1 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				9F5C46F72973271100651BA1 /* MainRealmActions.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -661,6 +680,7 @@
 				1FC6B532296C4CF3000A147B /* NetworkService.swift in Sources */,
 				1FC6B4FB296C46D6000A147B /* AppDelegate.swift in Sources */,
 				1FC6B537296C4CF4000A147B /* BaseURL.swift in Sources */,
+				9F5C46F82973271100651BA1 /* MainRealmActions.swift in Sources */,
 				1FC6B5AE296CF0D0000A147B /* UIView+.swift in Sources */,
 				1FC6B57F296C6D71000A147B /* DialogueData.swift in Sources */,
 				1FC6B552296C5791000A147B /* Coordinator.swift in Sources */,

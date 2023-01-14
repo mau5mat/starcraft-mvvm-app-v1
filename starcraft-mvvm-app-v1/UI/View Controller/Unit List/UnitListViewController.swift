@@ -12,8 +12,8 @@ class UnitListViewController: UIViewController {
   
     weak var navigation: UnitListNavigation?
     
-    var loadingService: LoadingService!
-    var dialogueService: DialogueService!
+    var loadingService: Loadable?
+    var dialogueService: Dialogued?
     
     var viewModel: UnitListViewModel!
 
