@@ -10,7 +10,7 @@ import UIKit
 class MainViewController: UIViewController {
     @IBOutlet weak private var tableView: UITableView!
     
-    weak var navigation: MainNavigation?
+    weak var navigation: MainNavigationDelegate?
     
     var loadingService: Loadable?
     var dialogueService: Dialogued?
@@ -41,15 +41,11 @@ class MainViewController: UIViewController {
     
     private func setupTableView() {
         tableView.register(MainCell.nib(), forCellReuseIdentifier: MainCell.reuseIdentifier())
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
-        
         tableView.backgroundColor = .lightGray
-        
         tableView.reloadData()
     }
 }

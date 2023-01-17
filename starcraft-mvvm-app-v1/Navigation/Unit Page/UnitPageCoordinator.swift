@@ -15,7 +15,6 @@ class UnitPageCoordinator: Coordinator {
     
     init(navigationController: UINavigationController, unit: SCUnit) {
         self.navigationController = navigationController
-        
         self.unit = unit
     }
     

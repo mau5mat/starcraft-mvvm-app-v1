@@ -41,14 +41,14 @@ class MainCoordinator: Coordinator {
     }
 }
 
-protocol MainNavigation: AnyObject {
+protocol MainNavigationDelegate: AnyObject {
     func showUnitListPage(with units: [SCUnit])
 }
 
-extension MainCoordinator: MainNavigation {
+extension MainCoordinator: MainNavigationDelegate {
     func showUnitListPage(with units: [SCUnit]) {
         let coordinator = UnitListCoordinator(navigationController: navigationController, units: units)
-        self.childCoordinators.append(coordinator)
+        childCoordinators.append(coordinator)
         coordinator.start()
     }
 }

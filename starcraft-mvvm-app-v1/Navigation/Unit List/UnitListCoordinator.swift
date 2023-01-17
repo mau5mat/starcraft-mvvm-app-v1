@@ -15,7 +15,6 @@ class UnitListCoordinator: Coordinator {
     
     init(navigationController: UINavigationController, units: [SCUnit]) {
         self.navigationController = navigationController
-        
         self.units = units
     }
     
@@ -44,14 +43,14 @@ class UnitListCoordinator: Coordinator {
     }
 }
 
-protocol UnitListNavigation: AnyObject {
+protocol UnitListNavigationDelegate: AnyObject {
     func showUnitPage(with unit: SCUnit)
 }
 
-extension UnitListCoordinator: UnitListNavigation {
+extension UnitListCoordinator: UnitListNavigationDelegate {
     func showUnitPage(with unit: SCUnit) {
         let coordinator = UnitPageCoordinator(navigationController: navigationController, unit: unit)
-        self.childCoordinators.append(coordinator)
+        childCoordinators.append(coordinator)
         coordinator.start()
     }
 }

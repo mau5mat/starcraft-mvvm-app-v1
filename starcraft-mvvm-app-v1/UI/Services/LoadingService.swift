@@ -23,7 +23,7 @@ struct LoadingService: Loadable {
         }
     }
     
-    func hideLoading(on viewController: UIViewController, completion: (() -> Void)? = nil) {
+    func hideLoading(on viewController: UIViewController, completion: (() -> Void)?) {
         DispatchQueue.main.async {
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
                 if let loadingViewController = viewController.presentedViewController as? LoadingViewController {

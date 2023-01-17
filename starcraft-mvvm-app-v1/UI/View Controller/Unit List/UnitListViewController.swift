@@ -10,7 +10,7 @@ import UIKit
 class UnitListViewController: UIViewController {
     @IBOutlet weak private var tableView: UITableView!
   
-    weak var navigation: UnitListNavigation?
+    weak var navigation: UnitListNavigationDelegate?
     
     var loadingService: Loadable?
     var dialogueService: Dialogued?
@@ -33,15 +33,11 @@ class UnitListViewController: UIViewController {
     
     private func setupTableView() {
         tableView.register(UnitListCell.nib(), forCellReuseIdentifier: UnitListCell.reuseIdentifier())
-        
         tableView.delegate = self
         tableView.dataSource = self
-
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableView.automaticDimension
-        
         tableView.backgroundColor = .lightGray
-        
         tableView.reloadData()
     }
 }
