@@ -15,7 +15,6 @@ class UnitListCoordinator: Coordinator {
     
     init(navigationController: UINavigationController, units: [SCUnit]) {
         self.navigationController = navigationController
-        self.navigationController.navigationBar.prefersLargeTitles = true
         
         self.units = units
     }
@@ -28,8 +27,10 @@ class UnitListCoordinator: Coordinator {
         viewController.dialogueService = DialogueService()
         viewController.viewModel = viewModel
         viewController.navigation = self
+        
+        viewController.navigationItem.largeTitleDisplayMode = .never
     
-        navigationController.pushViewController(viewController, animated: false)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func finish(with child: Coordinator?) {

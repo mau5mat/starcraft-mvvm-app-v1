@@ -15,7 +15,6 @@ class UnitPageCoordinator: Coordinator {
     
     init(navigationController: UINavigationController, unit: SCUnit) {
         self.navigationController = navigationController
-        self.navigationController.navigationBar.prefersLargeTitles = true
         
         self.unit = unit
     }

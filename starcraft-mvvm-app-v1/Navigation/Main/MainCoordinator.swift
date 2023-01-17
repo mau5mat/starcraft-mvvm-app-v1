@@ -13,7 +13,6 @@ class MainCoordinator: Coordinator {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.navigationController.navigationBar.prefersLargeTitles = true
     }
     
     func start() {
@@ -28,7 +27,7 @@ class MainCoordinator: Coordinator {
         viewController.viewModel = viewModel
         viewController.navigation = self
         
-        navigationController.pushViewController(viewController, animated: false)
+        navigationController.pushViewController(viewController, animated: true)
     }
     
     func finish(with child: Coordinator?) {

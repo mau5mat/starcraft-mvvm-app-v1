@@ -17,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let navigationController = UINavigationController()
         
+        navigationController.navigationBar.prefersLargeTitles = true
+        
         coordinator = MainCoordinator(navigationController: navigationController)
         coordinator?.start()
         

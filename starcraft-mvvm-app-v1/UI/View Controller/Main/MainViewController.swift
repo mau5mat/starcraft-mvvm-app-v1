@@ -24,10 +24,6 @@ class MainViewController: UIViewController {
         fetchAllUnits()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     private func fetchAllUnits() {
         Task {
             await viewModel.fetchAllUnits()
