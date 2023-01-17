@@ -23,7 +23,7 @@ class MainCell: UITableViewCell {
     }
 
     func update(with viewModel: MainCellViewModel) {
-        title.text = viewModel.title
+        title.text = viewModel.typeToString()
         thumbnailImage.image = viewModel.thumbnailImage
         
         layoutIfNeeded()

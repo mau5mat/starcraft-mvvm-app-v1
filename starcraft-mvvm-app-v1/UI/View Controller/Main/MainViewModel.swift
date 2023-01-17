@@ -6,16 +6,13 @@
 //
 
 import UIKit
-import RealmSwift
 import Combine
 
 class MainViewModel: ObservableObject {
     @Published private(set) var loadingState: LoadingState<Error>
     
     private let responseService: EndpointResponseServiceProtocol
-    private let realmActions: MainRealmActionsProtocol
-    
-    private let persistenceService: PersistenceService
+    private let realmActions: MainRealmActionsDelegate
     private let connectionManager: ConnectionManager
     
     var cancellables: Set<AnyCancellable> = []
@@ -24,19 +21,18 @@ class MainViewModel: ObservableObject {
     private(set) var factoryUnits: [SCUnit] = []
     private(set) var starportUnits: [SCUnit] = []
     
-    init(responseService: EndpointResponseServiceProtocol, realmActions: MainRealmActionsProtocol, persistenceService: PersistenceService, connectionManager: ConnectionManager) {
+    init(responseService: EndpointResponseServiceProtocol, realmActions: MainRealmActionsDelegate, connectionManager: ConnectionManager) {
         self.responseService = responseService
         self.realmActions = realmActions
-        self.persistenceService = persistenceService
         self.connectionManager = connectionManager
         
         loadingState = .idle
     }
     
     func buildingData() -> [BuildingData] {
-        let buildingData = [BuildingData(title: "Barracks", thumbnailImage: UIImage(named: "barracks")!),
-                            BuildingData(title: "Factory", thumbnailImage: UIImage(named: "factory")!),
-                            BuildingData(title: "Starport", thumbnailImage: UIImage(named: "starport")!)]
+        let buildingData = [BuildingData(type: .barracks, thumbnailImage: UIImage(named: "barracks")!),
+                            BuildingData(type: .factory, thumbnailImage: UIImage(named: "factory")!),
+                            BuildingData(type: .starport, thumbnailImage: UIImage(named: "starport")!)]
         return buildingData
     }
     
@@ -61,11 +57,11 @@ class MainViewModel: ObservableObject {
             }
             barracksUnits = try await responseService.decodeData(from: TerranEndpoint.getBarracksUnits)
             
-            persistenceService.realm.writeAsync {
-                self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
+            PersistenceManager.shared.realm.writeAsync {
+                self.realmActions.removeUnitsFromRealm()
                 
                 for unit in self.barracksUnits {
-                    unit.add(to: self.persistenceService.realm, with: .all)
+                    unit.add(to: PersistenceManager.shared.realm, with: .all)
                 }
             }
         } catch {
@@ -83,11 +79,11 @@ class MainViewModel: ObservableObject {
             }
             factoryUnits = try await responseService.decodeData(from: TerranEndpoint.getFactoryUnits)
             
-            persistenceService.realm.writeAsync {
-                self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
+            PersistenceManager.shared.realm.writeAsync {
+                self.realmActions.removeUnitsFromRealm()
                 
                 for unit in self.factoryUnits {
-                    unit.add(to: self.persistenceService.realm, with: .all)
+                    unit.add(to: PersistenceManager.shared.realm, with: .all)
                 }
             }
         } catch {
@@ -104,12 +100,12 @@ class MainViewModel: ObservableObject {
                 return
             }
             starportUnits = try await responseService.decodeData(from: TerranEndpoint.getStarportUnits)
-  
-            persistenceService.realm.writeAsync {
-                self.realmActions.removeUnitsFrom(realm: self.persistenceService.realm)
+            
+            PersistenceManager.shared.realm.writeAsync {
+                self.realmActions.removeUnitsFromRealm()
                 
                 for unit in self.starportUnits {
-                    unit.add(to: self.persistenceService.realm, with: .all)
+                    unit.add(to: PersistenceManager.shared.realm, with: .all)
                 }
             }
         } catch {
@@ -118,6 +114,6 @@ class MainViewModel: ObservableObject {
     }
     
     private func fetchUnitsWithRealmIfOffline(from building: String) -> [SCUnit] {
-        return realmActions.getUnitsFrom(realm: persistenceService.realm, with: building)
+        return realmActions.getUnitsFromRealm(with: building)
     }
 }

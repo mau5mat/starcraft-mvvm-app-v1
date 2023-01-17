@@ -1,5 +1,5 @@
 //
-//  PersistenceService.swift
+//  PersistenceManager.swift
 //  starcraft-mvvm-app-v1
 //
 //  Created by Matthew Roberts on 09/01/2023.
@@ -7,13 +7,14 @@
 
 import RealmSwift
 
-struct PersistenceService {
+struct PersistenceManager {
+    static let shared = PersistenceManager()
     let realm: Realm
     
     // This would need removed in production ..
     let configuration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)
     
-    init() {
+    private init() {
         Realm.Configuration.defaultConfiguration = configuration
         self.realm = try! Realm()
 

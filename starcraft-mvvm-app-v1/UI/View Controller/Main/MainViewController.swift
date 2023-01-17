@@ -19,13 +19,19 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchAllUnits()
+        setupUI()
         handleState()
+        fetchAllUnits()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupUI()
+    }
+    
+    private func fetchAllUnits() {
+        Task {
+            await viewModel.fetchAllUnits()
+        }
     }
     
     private func setupUI() {
@@ -73,25 +79,18 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let buildingData = viewModel.buildingData()[indexPath.row]
         
-        switch buildingData.title {
-        case "Barracks":
+        switch buildingData.type {
+        case .barracks:
             navigation?.showUnitListPage(with: viewModel.barracksUnits)
-        case "Factory":
+            break
+        case .factory:
             navigation?.showUnitListPage(with: viewModel.factoryUnits)
-        case "Starport":
+            break
+        case .starport:
             navigation?.showUnitListPage(with: viewModel.starportUnits)
+            break
         case .none:
             break
-        case .some(_):
-            break
-        }
-    }
-}
-
-extension MainViewController {
-    private func fetchAllUnits() {
-        Task {
-            await viewModel.fetchAllUnits()
         }
     }
 }

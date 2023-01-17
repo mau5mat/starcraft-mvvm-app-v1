@@ -13,7 +13,7 @@ protocol Dialogued {
 
 struct DialogueService: Dialogued {
     func showDialogue(on viewController: UIViewController, data: DialogueData, buttonActionClosure: (() -> Void)? = nil) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             let viewModel = DialogueViewModel(data: data)
             let dialogueView = DialogueViewController()
             

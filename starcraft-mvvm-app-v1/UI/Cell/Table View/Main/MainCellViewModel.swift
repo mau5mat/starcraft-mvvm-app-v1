@@ -8,11 +8,16 @@
 import UIKit
 
 class MainCellViewModel {
-    private(set) var title: String?
+    private(set) var type: BuildingType?
     private(set) var thumbnailImage: UIImage?
     
     init(buildingData: BuildingData) {
-        self.title = buildingData.title
+        self.type = buildingData.type
         self.thumbnailImage = buildingData.thumbnailImage
+    }
+    
+    func typeToString() -> String {
+        guard let type = self.type?.rawValue else { return "" }
+        return type
     }
 }

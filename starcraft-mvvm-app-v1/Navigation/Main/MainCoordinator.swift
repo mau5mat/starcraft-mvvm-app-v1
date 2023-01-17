@@ -20,7 +20,6 @@ class MainCoordinator: Coordinator {
         let viewModel = MainViewModel(
             responseService: EndpointResponseService(networkService: NetworkService(), parser: DataParser()),
             realmActions: MainRealmActions(),
-            persistenceService: PersistenceService(),
             connectionManager: ConnectionManager())
         
         let viewController = MainViewController.instantiate(storyboard: "Main")
@@ -28,7 +27,6 @@ class MainCoordinator: Coordinator {
         viewController.loadingService = LoadingService()
         viewController.viewModel = viewModel
         viewController.navigation = self
-        
         
         navigationController.pushViewController(viewController, animated: false)
     }

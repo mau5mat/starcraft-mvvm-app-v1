@@ -36,8 +36,7 @@ struct EndpointResponseService: EndpointResponseServiceProtocol {
             let data = try Data(contentsOf: url)
             let decodedData: T = try parser.parse(data: data)
             return decodedData
-        }
-        catch {
+        } catch {
             throw error
         }
     }

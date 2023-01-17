@@ -7,12 +7,18 @@
 
 import UIKit
 
+enum BuildingType: String {
+    case barracks = "Barracks"
+    case factory = "Factory"
+    case starport = "Starport"
+}
+
 struct BuildingData {
-    private(set) var title: String?
+    private(set) var type: BuildingType?
     private(set) var thumbnailImage: UIImage?
     
-    init(title: String, thumbnailImage: UIImage) {
-        self.title = title
+    init(type: BuildingType, thumbnailImage: UIImage) {
+        self.type = type
         self.thumbnailImage = thumbnailImage
     }
 }

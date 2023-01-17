@@ -6,17 +6,18 @@
 //
 
 import Foundation
-import RealmSwift
 
-protocol MainRealmActionsProtocol {
-    func getUnitsFrom(realm: Realm, with building: String) -> [SCUnit]
-    func removeUnitsFrom(realm: Realm)
-    func removeBuildingsFrom(realm: Realm)
-    func removeUnitTypesFrom(realm: Realm)
+protocol MainRealmActionsDelegate {
+    func getUnitsFromRealm(with building: String) -> [SCUnit]
+    func removeUnitsFromRealm()
+    func removeBuildingsFromRealm()
+    func removeUnitTypesFromRealm()
 }
 
-struct MainRealmActions: MainRealmActionsProtocol {
-    func getUnitsFrom(realm: Realm, with building: String) -> [SCUnit] {
+struct MainRealmActions: MainRealmActionsDelegate {
+    let realm = PersistenceManager.shared.realm
+    
+    func getUnitsFromRealm(with building: String) -> [SCUnit] {
         let unitObject = SCUnit.read(from: realm)
         let unitData = unitObject.compactMap { SCUnit(managedObject: $0) }
         let unitArray = Array(unitData)
@@ -25,20 +26,20 @@ struct MainRealmActions: MainRealmActionsProtocol {
         return filteredUnits
     }
     
-    func removeUnitsFrom(realm: Realm) {
+    func removeUnitsFromRealm() {
         let unitObjects = SCUnit.read(from: realm)
         SCUnit.remove(results: unitObjects, from: realm)
         
-        removeBuildingsFrom(realm: realm)
-        removeUnitTypesFrom(realm: realm)
+        removeBuildingsFromRealm()
+        removeUnitTypesFromRealm()
     }
     
-    internal func removeBuildingsFrom(realm: Realm) {
+    internal func removeBuildingsFromRealm() {
         let buildingObjects = Building.read(from: realm)
         Building.remove(results: buildingObjects, from: realm)
     }
     
-    internal func removeUnitTypesFrom(realm: Realm) {
+    internal func removeUnitTypesFromRealm() {
         let unitTypeObjects = UnitType.read(from: realm)
         UnitType.remove(results: unitTypeObjects, from: realm)
     }

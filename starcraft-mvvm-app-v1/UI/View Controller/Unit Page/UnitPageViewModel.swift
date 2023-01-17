@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 class UnitPageViewModel {
     private(set) var unit: SCUnit?

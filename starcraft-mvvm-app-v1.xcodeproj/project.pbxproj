@@ -23,7 +23,7 @@
 		1FC6B53C296C4CF4000A147B /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B527296C4CF3000A147B /* ApiError.swift */; };
 		1FC6B53D296C4CF4000A147B /* ErrorResponseMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B528296C4CF3000A147B /* ErrorResponseMessage.swift */; };
 		1FC6B53E296C4CF4000A147B /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B529296C4CF3000A147B /* NetworkError.swift */; };
-		1FC6B549296C4D1F000A147B /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B547296C4D1F000A147B /* PersistenceService.swift */; };
+		1FC6B549296C4D1F000A147B /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B547296C4D1F000A147B /* PersistenceManager.swift */; };
 		1FC6B54A296C4D1F000A147B /* Persistable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B548296C4D1F000A147B /* Persistable.swift */; };
 		1FC6B54C296C4DDE000A147B /* TerranEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B54B296C4DDE000A147B /* TerranEndpoint.swift */; };
 		1FC6B54F296C573D000A147B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC6B54E296C573D000A147B /* MainViewModel.swift */; };
@@ -84,7 +84,7 @@
 		1FC6B527296C4CF3000A147B /* ApiError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		1FC6B528296C4CF3000A147B /* ErrorResponseMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorResponseMessage.swift; sourceTree = "<group>"; };
 		1FC6B529296C4CF3000A147B /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		1FC6B547296C4D1F000A147B /* PersistenceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
+		1FC6B547296C4D1F000A147B /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		1FC6B548296C4D1F000A147B /* Persistable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistable.swift; sourceTree = "<group>"; };
 		1FC6B54B296C4DDE000A147B /* TerranEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerranEndpoint.swift; sourceTree = "<group>"; };
 		1FC6B54E296C573D000A147B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -319,7 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				1FC6B548296C4D1F000A147B /* Persistable.swift */,
-				1FC6B547296C4D1F000A147B /* PersistenceService.swift */,
+				1FC6B547296C4D1F000A147B /* PersistenceManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -685,7 +685,7 @@
 				1FC6B57F296C6D71000A147B /* DialogueData.swift in Sources */,
 				1FC6B552296C5791000A147B /* Coordinator.swift in Sources */,
 				1FC6B54F296C573D000A147B /* MainViewModel.swift in Sources */,
-				1FC6B549296C4D1F000A147B /* PersistenceService.swift in Sources */,
+				1FC6B549296C4D1F000A147B /* PersistenceManager.swift in Sources */,
 				1FC6B53E296C4CF4000A147B /* NetworkError.swift in Sources */,
 				1FC6B562296C65A5000A147B /* Storyboarded.swift in Sources */,
 				1FC6B594296C8906000A147B /* BuildingData.swift in Sources */,
