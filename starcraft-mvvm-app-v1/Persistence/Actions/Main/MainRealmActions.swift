@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MainRealmActionsDelegate {
-    func getUnitsFromRealm(with building: String) -> [SCUnit]
+    func getUnitsFromRealm(with building: BuildingType) -> [SCUnit]
     func removeUnitsFromRealm()
     func removeBuildingsFromRealm()
     func removeUnitTypesFromRealm()
@@ -17,11 +17,12 @@ protocol MainRealmActionsDelegate {
 struct MainRealmActions: MainRealmActionsDelegate {
     let realm = PersistenceManager.shared.realm
     
-    func getUnitsFromRealm(with building: String) -> [SCUnit] {
+    func getUnitsFromRealm(with building: BuildingType) -> [SCUnit] {
+        let buildingString = building.rawValue
         let unitObject = SCUnit.read(from: realm)
         let unitData = unitObject.compactMap { SCUnit(managedObject: $0) }
         let unitArray = Array(unitData)
-        let filteredUnits = unitArray.filter({ $0.builtFrom == building })
+        let filteredUnits = unitArray.filter({ $0.builtFrom == buildingString })
         
         return filteredUnits
     }

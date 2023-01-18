@@ -51,7 +51,7 @@ class MainViewModel: ObservableObject {
     func fetchBarracksUnits() async {
         do {
             guard connectionManager.noInternet() else {
-                barracksUnits = fetchUnitsWithRealmIfOffline(from: "Barracks")
+                barracksUnits = fetchUnitsWithRealmIfOffline(from: .barracks)
                 loadingState = .noInternet
                 return
             }
@@ -73,7 +73,7 @@ class MainViewModel: ObservableObject {
     func fetchFactoryUnits() async {
         do {
             guard connectionManager.noInternet() else {
-                factoryUnits = fetchUnitsWithRealmIfOffline(from: "Factory")
+                factoryUnits = fetchUnitsWithRealmIfOffline(from: .factory)
                 loadingState = .noInternet
                 return
             }
@@ -95,7 +95,7 @@ class MainViewModel: ObservableObject {
     func fetchStarportUnits() async {
         do {
             guard connectionManager.noInternet() else {
-                starportUnits = fetchUnitsWithRealmIfOffline(from: "Starport")
+                starportUnits = fetchUnitsWithRealmIfOffline(from: .starport)
                 loadingState = .noInternet
                 return
             }
@@ -113,7 +113,7 @@ class MainViewModel: ObservableObject {
         }
     }
     
-    private func fetchUnitsWithRealmIfOffline(from building: String) -> [SCUnit] {
+    private func fetchUnitsWithRealmIfOffline(from building: BuildingType) -> [SCUnit] {
         return realmActions.getUnitsFromRealm(with: building)
     }
 }
